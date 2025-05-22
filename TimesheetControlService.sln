@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DD54A1D4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Control.UnitTests", "Control.UnitTests\Control.UnitTests.csproj", "{FC051F61-856A-4057-8AF9-6357179C44BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Control.API.Models", "Control.API.Models\Control.API.Models.csproj", "{AC0C26EC-DD33-45C7-9004-EADB60311BB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{FC051F61-856A-4057-8AF9-6357179C44BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC051F61-856A-4057-8AF9-6357179C44BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC051F61-856A-4057-8AF9-6357179C44BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC0C26EC-DD33-45C7-9004-EADB60311BB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC0C26EC-DD33-45C7-9004-EADB60311BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC0C26EC-DD33-45C7-9004-EADB60311BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC0C26EC-DD33-45C7-9004-EADB60311BB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C88E55F2-3836-43E0-A692-B5A41CB775BA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{FC051F61-856A-4057-8AF9-6357179C44BB} = {DD54A1D4-D0EE-49E1-A217-3CAEF3F02B5F}
+		{AC0C26EC-DD33-45C7-9004-EADB60311BB6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {397C8E3E-0FBE-4534-957F-6689984818B9}
