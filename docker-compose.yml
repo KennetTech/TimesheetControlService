@@ -1,0 +1,6 @@
+services:
+  control.api:
+    image: ${DOCKER_REGISTRY-}controlapi
+    build:
+      context: .
+      dockerfile: Control.API/Dockerfile

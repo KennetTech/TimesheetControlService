@@ -14,6 +14,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapGet("/api/dashboard", () => "Hello, This is the dashboard api");
+
+app.MapGet("/api/dashboard/timesheet/employee/{id}/{date}", (int id, DateTime date) => $"{id} {date}");
+
+app.MapGet("/api/dashboard/novusdata/employee/{id}/{date}", (int id, DateTime date) => $"{id} {date}");
+
+app.MapGet("/api/dashboard/gpsdata/employee/{id}/{date}", (int id, DateTime date) => $"{id} {date}");
+
 app.UseHttpsRedirection();
 
 app.Run();
