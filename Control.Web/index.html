@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timekontrol Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.10/signalr.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <h1>Timekontrol Dashboard</h1>
+
+    <div class="status">Forbindelsesstatus: <span id="connectionStatus">Ikke forbundet</span></div>
+
+    <div id="timesheetData">
+        <p>Venter på timesedler...</p>
+    </div>
+
+    
+
+    <script>
+        const connectionStatusSpan = document.getElementById('connectionStatus');
+        const timesheetDataDiv = document.getElementById('timesheetData');
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5214/myhub")
+            .withAutomaticReconnect()
+            .build();
+
+        function formatDateTime(isoString) {
+            if (!isoString) return 'N/A';
+            const date = new Date(isoString);
+            return date.toLocaleString('da-DK'); // Formater til dansk dato- og tidsformat
+        }
+
+        function setMap() {
+
+            var map = L.map('map').setView([51.505, -0.09], 13);
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+
+           
+        }
+        
+        function addDashboardEntry(data) {
+
+            if (timesheetDataDiv.querySelector('p') && timesheetDataDiv.querySelector('p').textContent === 'Venter på timesedler...') {
+                timesheetDataDiv.innerHTML = '';
+            }
+
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'employee-entry';
+            entryDiv.innerHTML = `
+                <div class="employee-cell">
+                    <p>Medarbejder ID</p>
+                </div>
+                <div class="employee-cell">
+                    <p>${data.employeeId}</p>
+                </div>
+                <div class="employee-cell">
+                    <p>Vognløb</p>
+                </div>
+                <div class="employee-cell">
+                    <p>414</p>
+                </div>
+                <div class="employee-cell">
+                    <p>Godkendt</p>
+                </div>
+                <div class="employee-cell">
+                    <p>${data.approvedByEmployee}</p>
+                </div>
+                <div class="employee-cell">
+                    <p>Telefon</p>
+                </div>
+                <div class="employee-cell">
+                    <p>92 44 24 14</p>
+                </div>
+                <div class="employee-cell">
+                    <p>Dato</p>
+                </div>
+                <div class="employee-cell">
+                    <p>20250411</p>
+                </div>            
+                `;
+                
+                timesheetDataDiv.prepend(entryDiv);
+
+                const fragment = document.createDocumentFragment();
+                const mapDiv = fragment.appendChild(document.createElement('div'));               
+                mapDiv.id = 'map';
+
+                setMap;
+
+                entryDiv.after(mapDiv);
+
+                
+        }
+
+        
+        connection.onreconnecting(error => {
+            console.log(`Reconnecting...`);
+            connectionStatusSpan.textContent = 'Genopretter forbindelse...';
+            connectionStatusSpan.className = 'status disconnected';
+        });
+
+        connection.onreconnected(connectionId => {
+            console.log(`Connection reestablished with: ${connectionId}`);
+            connectionStatusSpan.textContent = 'Forbundet';
+            connectionStatusSpan.className = 'status connected';
+        });
+
+        connection.onclose(error => {
+            console.log(`Connection closed: ${error}`);
+            connectionStatusSpan.textContent = 'Ikke forbundet';
+            connectionStatusSpan.className = 'status disconnected';
+            setTimeout(() => startConnection(), 5000);
+        });
+
+
+        connection.on("ReceiveDashboardEntry", (timesheet) => {
+            console.log("Received Entry for dashboard:", timesheet);
+            addDashboardEntry(timesheet);
+            //setMap();
+        });
+
+        async function startConnection(){
+            try {
+                await connection.start();
+                console.log("SignalR connection startet");
+                connectionStatusSpan.textContent = 'Forbundet';
+                connectionStatusSpan.className = 'status connected';
+            } catch (err) {
+                console.error("Error connecting to SignalR: ", err);
+                connectionStatusSpan.textContent = 'Fejl ved forbindelse';
+                connectionStatusSpan.className = 'status disconnected';
+
+                setTimeout(() => startConnection(), 5000);
+            }
+        }
+        window.onload = startConnection;
+    </script>
+</body>
+</html>

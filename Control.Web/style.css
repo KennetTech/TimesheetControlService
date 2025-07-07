@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.employee-entry {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+
+#timesheetData {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+
+#map{
+    height: 180px;
+}
+
+.timesheet-container {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.frem-container {
+    display: flex;
+    margin-right: 10px;
+}
+
+.data-container {
+    text-align: right;
+}
+
+.employee-cell {
+    margin-right: 10px;
+}
+
+.data-cell {
+    text-align: right;
+    height: 20px;
+    width: 120px;
+    border: solid thin;
+    border-color: #000000;
+}

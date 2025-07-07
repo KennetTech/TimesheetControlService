@@ -1,8 +1,9 @@
-﻿namespace Control.API.Models;
+﻿
+namespace Control.API.Models;
 
-public class Novusdata
+public class TimesheetTest
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public string EmployeeId { get; set; } = string.Empty;
     public string EmployeeName { get; set; } = string.Empty;
